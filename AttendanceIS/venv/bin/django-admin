@@ -1,4 +1,6 @@
-#!/home/vishal/PycharmProjects/AttendanceIS/venv/bin/python
+#!/bin/sh
+'''exec' "/home/vishal/SDL Project/AttendanceIS/AttendanceIS/venv/bin/python3.6" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
