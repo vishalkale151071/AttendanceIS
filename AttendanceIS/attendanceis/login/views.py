@@ -1,6 +1,10 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render, HttpResponse
 from pymongo import MongoClient
-
+from django.views import generic
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
+import crypt
 
 def login(request):
 
@@ -8,13 +12,14 @@ def login(request):
 
 
 def verify(request):
-    client = MongoClient()
-    db = client['attendance']
-    collection = db['login_teacher']
-    query = {'name':'{}'.format(request.POST.get('uname'))}
-    data = collection.find(query)
+    if request.method == 'POST':
+        username = request.POST.get('uname')
+        password = request.POST.get('psw')
 
-    if data.count():
-        return HttpResponse('<h1>Valid</h1>')
-    else:
-        return HttpResponse('<h1>Invalid</h1>')
+        auth = authenticate(usename=username, password=password)
+        print(auth)
+
+class SignUp(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'login/signup.html'

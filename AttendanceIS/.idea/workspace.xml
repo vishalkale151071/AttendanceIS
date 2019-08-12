@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b467918-d78b-4b25-a738-f6fc3de3c399" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/attendanceis/login/templates/login/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AttendanceIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AttendanceIS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/attendanceis/login/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendanceis/login/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendanceis/attendanceis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendanceis/attendanceis/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendanceis/attendanceis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendanceis/attendanceis/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/attendanceis/login/templates/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/attendanceis/templates/registration/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/attendanceis/login/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendanceis/login/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/attendanceis/login/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendanceis/login/views.py" afterDir="false" />
     </list>
@@ -29,9 +28,15 @@
   </component>
   <component name="ProjectId" id="1P6s6Tg4ZFv2VAn2QEL1kLUNySg" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/attendanceis/templates/registration" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -104,8 +109,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/attendanceis/login/views.py</url>
-          <line>1</line>
+          <line>2</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/attendanceis/login/views.py</url>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
