@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from djongo import models
 
 
@@ -18,11 +19,9 @@ class Lab(models.Model):
 
 
 class Teacher(models.Model):
-    #id is employee number of a teacher
-    id = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=80)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
     email_id = models.CharField(max_length=50)
     primary_phone_no = models.CharField(max_length=10)
     secondary_phone_no = models.CharField(max_length=10)
@@ -30,3 +29,16 @@ class Teacher(models.Model):
     cc = models.BooleanField(default=False)
     subjects = models.ArrayModelField(model_container=Subjects)
     labs = models.ArrayModelField(model_container=Lab)
+
+
+class Student(models.Model):
+    roll_no = models.CharField(max_length=12, blank=False, primary_key=True, null=False)
+    name = models.CharField(max_length=100)
+    department = models.CharField(max_length=10)
+    division = models.CharField(max_length=2)
+    year = models.CharField(max_length=3)
+    batch = models.CharField(max_length=2)
+    teacher_guardian = models.CharField(max_length=100)
+    email_id = models.EmailField(max_length=100)
+    primary_phone_no = models.CharField(max_length=10)
+    parents_phone_no = models.CharField(max_length=10)
