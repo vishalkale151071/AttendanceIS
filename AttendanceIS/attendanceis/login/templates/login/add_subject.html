@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Subject/Lab</title>
+</head>
+<body>
+
+<form method="post" action="{% url 'add_subject_lab' %}">
+    {% csrf_token %}
+    <label for="sub">Subject</label>
+    <input id="sub" type="radio" name="ch" value="subject">
+    <br>
+    <label for="lab">Lab</label>
+    <input id="lab" type="radio" name="ch" value="lab">
+    <br>
+    <button type="submit">Add</button>
+</form>
+
+{% if subject %}
+    <h2>Subject</h2>
+    {{ form.as_p }}
+{% endif %}
+
+{% if lab %}
+    <h2>Lab</h2>
+    {{ form.as_p }}
+{% endif %}
+
+</body>
+</html>
