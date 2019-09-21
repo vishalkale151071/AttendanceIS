@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from .forms import TeacherRegistrationForm, UserForm, StudentRegistrationForm, SubjectFrom, LabFrom
@@ -36,9 +37,18 @@ def student_signup(request):
     else:
         return render(request, 'login/student_signup.html', {'form': StudentRegistrationForm})
 
-
+@login_required
 def add_subject_lab(requset):
     if requset.method == 'POST':
+        if requset.POST.get('form') == 'subject':
+            form = SubjectFrom(data=requset.POST)
+            save = form.save()
+            return render(requset, 'login/add_subject.html', {'subject': True, 'form': SubjectFrom})
+        if requset.POST.get('form') == 'lab':
+            print('lab form fiiled.')
+            form = LabFrom(data=requset.POST)
+            save = form.save()
+            return render(requset, 'login/add_subject.html', {'lab': True, 'form': LabFrom})
         if requset.POST.get('ch') == 'subject':
             return render(requset, 'login/add_subject.html', {'subject':True,'form':SubjectFrom})
         if requset.POST.get('ch') == 'lab':

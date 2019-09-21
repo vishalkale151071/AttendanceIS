@@ -14,17 +14,27 @@
     <label for="lab">Lab</label>
     <input id="lab" type="radio" name="ch" value="lab">
     <br>
-    <button type="submit">Add</button>
+    <button type="submit">Submit</button>
 </form>
 
 {% if subject %}
-    <h2>Subject</h2>
-    {{ form.as_p }}
+    <h2>Subject Details</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="form" value="subject">
+        <button type="submit">Add</button>
+    </form>
 {% endif %}
 
 {% if lab %}
-    <h2>Lab</h2>
-    {{ form.as_p }}
+    <h2>Lab Details</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form" value="lab">
+        {{ form.as_p }}
+        <button type="submit">Add</button>
+    </form>
 {% endif %}
 
 </body>

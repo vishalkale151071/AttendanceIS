@@ -26,10 +26,10 @@ class StudentRegistrationForm(forms.ModelForm):
 class SubjectFrom(forms.ModelForm):
     class Meta:
         model = Subject
-        fields = ('code', 'name', 'dept', 'year')
+        fields = ('code', 'name', 'dept', 'sem')
 
 
 class LabFrom(forms.ModelForm):
     class Meta:
         model = Lab
-        fields = ('code', 'name', 'dept', 'year')
+        fields = ('code', 'name', 'dept', 'sem')

@@ -12,12 +12,12 @@ class Subject(models.Model):
         ('inst', 'Instrumental Engineering'),
         ('prod', 'Production Engineering'),
     )
-    year_choices = (('F.E', 'F.E'), ('S.E', 'S.E'), ('T.E', 'T.E'), ('B.E', 'B.E'))
+    sem_choices = (('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'))
 
     code = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     dept = models.CharField(max_length=50, choices=dept_choices)
-    year = models.CharField(max_length=3, choices=year_choices)
+    sem = models.CharField(max_length=1, choices=sem_choices)
 
     def __str__(self):
         return self.code + " " + self.name
@@ -33,12 +33,12 @@ class Lab(models.Model):
         ('inst', 'Instrumental Engineering'),
         ('prod', 'Production Engineering'),
     )
-    year_choices = (('F.E', 'F.E'), ('S.E', 'S.E'), ('T.E', 'T.E'), ('B.E', 'B.E'))
+    sem_choices = (('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'))
 
     code = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     dept = models.CharField(max_length=50, choices=dept_choices)
-    year = models.CharField(max_length=3, choices=year_choices)
+    sem = models.CharField(max_length=1, choices=sem_choices)
 
     def __str__(self):
         return self.code + " " + self.name
