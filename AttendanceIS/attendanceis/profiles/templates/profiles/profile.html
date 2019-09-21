@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>profile</title>
+</head>
+<body>
+    {{ name }}<br>
+    {{ username }}<br>
+    {{ subjects }}<br>
+    {{ labs }}
+    {% for subject in subjects %}
+        {{ subject.subject_name_id }}
+    {% endfor %}
+</body>
+</html>

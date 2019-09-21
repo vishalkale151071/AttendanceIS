@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Profile</title>
+</head>
+<body>
+    <h2>Teacher Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+        </button> <a href="{% url 'profile' %}"><button type="button">Cancle</button></a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Profile</title>
+</head>
+<body>
+    {% for student in students %}
+    <a href="{% url 'student_profile_update' student.roll_no %}">{{ student.name }}</a><br>
+    {% endfor %}
+</body>
+</html>

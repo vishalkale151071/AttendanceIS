@@ -65,7 +65,6 @@ class Teacher(models.Model):
     email_id = models.CharField(max_length=50)
     primary_phone_no = models.CharField(max_length=10)
     secondary_phone_no = models.CharField(max_length=10)
-    tg = models.BooleanField(default=False)
     cc = models.BooleanField(default=False)
     subjects = models.ArrayModelField(model_container=Subjects)
     labs = models.ArrayModelField(model_container=Labs)
@@ -90,11 +89,12 @@ class Student(models.Model):
         ('inst', 'Instrumental Engineering'),
         ('prod', 'Production Engineering'),
     )
+    div_choices = (('A', 'A'), ('B', 'B'))
     # data model
     roll_no = models.CharField(max_length=12, blank=False, primary_key=True, null=False)
     name = models.CharField(max_length=100)
     department = models.CharField(max_length=10, choices=dept_choices, default='comp')
-    division = models.CharField(max_length=2)
+    division = models.CharField(max_length=2, choices=div_choices)
     year = models.CharField(max_length=3, choices=year_choices, default='fe')
     batch = models.CharField(max_length=2, choices=batch_choices, default='a1')
     teacher_guardian = models.ForeignKey(Teacher, on_delete=False, to_field='name')
