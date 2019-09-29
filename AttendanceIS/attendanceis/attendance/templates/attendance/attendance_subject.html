@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Subject</title>
+</head>
+<body>
+    <h2>Subject Attendance</h2>
+    <form method="Post" action="{% url 'attendance_subject' %}">
+        {% csrf_token %}
+        <label for="sub">Subject :</label>
+        <select name="subject" id="sub">
+            {% for subject in subjects %}
+                <option value="{{ subject.subject_name_id }}">{{ subject.subject_name_id }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="date">Date :</label>
+        <input type="date" name="date" id="date"><br>
+        <label for="from">From :</label>
+        <input type="time" name="from" id="from" min="07:00" max="18:00">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="to">To :</label>
+        <input type="time" name="to" id="to" min="07:00" max="18:00"><br>
+        <label for="slot">Slot/s :</label>
+        <input type="number" name="slots" id="slot" value="1"><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

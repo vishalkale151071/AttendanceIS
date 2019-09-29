@@ -20,7 +20,7 @@ def teacher_signup(request):
             else:
                 print("password does not matches.")
                 return render(request, 'login/signup.html', {'form': UserForm, 'extra_form': TeacherRegistrationForm, 'cperror':"password does not matches."})
-            return render(request, 'registration/login.html', {})
+            return render(request, 'registration/home.html', {})
         else:
             print("INVALID form data")
             return render(request, 'login/signup.html', {'form': UserForm, 'extra_form': TeacherRegistrationForm})
@@ -38,20 +38,20 @@ def student_signup(request):
         return render(request, 'login/student_signup.html', {'form': StudentRegistrationForm})
 
 @login_required
-def add_subject_lab(requset):
-    if requset.method == 'POST':
-        if requset.POST.get('form') == 'subject':
-            form = SubjectFrom(data=requset.POST)
+def add_subject_lab(request):
+    if request.method == 'POST':
+        if request.POST.get('form') == 'subject':
+            form = SubjectFrom(data=request.POST)
             save = form.save()
-            return render(requset, 'login/add_subject.html', {'subject': True, 'form': SubjectFrom})
-        if requset.POST.get('form') == 'lab':
+            return render(request, 'login/add_subject.html', {'subject': True, 'form': SubjectFrom})
+        if request.POST.get('form') == 'lab':
             print('lab form fiiled.')
-            form = LabFrom(data=requset.POST)
+            form = LabFrom(data=request.POST)
             save = form.save()
-            return render(requset, 'login/add_subject.html', {'lab': True, 'form': LabFrom})
-        if requset.POST.get('ch') == 'subject':
-            return render(requset, 'login/add_subject.html', {'subject':True,'form':SubjectFrom})
-        if requset.POST.get('ch') == 'lab':
-            return render(requset, 'login/add_subject.html', {'lab':True,'form':LabFrom})
+            return render(request, 'login/add_subject.html', {'lab': True, 'form': LabFrom})
+        if request.POST.get('ch') == 'subject':
+            return render(request, 'login/add_subject.html', {'subject':True,'form':SubjectFrom})
+        if request.POST.get('ch') == 'lab':
+            return render(request, 'login/add_subject.html', {'lab':True,'form':LabFrom})
     else:
-        return render(requset, 'login/add_subject.html', {})
+        return render(request, 'login/add_subject.html', {})

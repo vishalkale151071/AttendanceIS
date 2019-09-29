@@ -5,11 +5,9 @@
     <title>profile</title>
 </head>
 <body>
-    {{ name }}<br>
-    {{ username }}<br>
-    {{ subjects }}<br>
-    {{ labs }}
-    {% for subject in subjects %}
+    {{ teacher.name }}<br>
+    {{ teacher.username }}<br>
+    {% for subject in teacher.subjects %}
         {{ subject.subject_name_id }}
     {% endfor %}
 </body>

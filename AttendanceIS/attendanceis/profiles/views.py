@@ -6,6 +6,7 @@ from pymongo import MongoClient
 # Create your views here.
 
 
+@login_required
 def profile_update(request):
     teacher = Teacher.objects.get(username=request.user)
     form = TeacherUpdateForm(request.POST or None, instance=teacher)
@@ -17,6 +18,7 @@ def profile_update(request):
         return render(request, 'profiles/teacher_profile.html', {'form': form})
 
 
+@login_required
 def student_profile_update(request, roll_no):
     student = Student.objects.get(roll_no=roll_no)
     if student:
@@ -31,9 +33,11 @@ def student_profile_update(request, roll_no):
         print('Here')
 
 
+@login_required
 def student_profile(request):
     students = Student.objects.all()
     return render(request, 'profiles/student.html', {'students': students})
+
 
 @login_required
 def profile_view(request):
@@ -41,7 +45,5 @@ def profile_view(request):
     db = client['attendance']
     col = db['login_teacher']
     teacher = col.find({'username': str(request.user)})
-    for x in teacher:
-        teacher = x
     client.close()
-    return render(request, 'profiles/profile.html', teacher)
+    return render(request, 'profiles/profile.html', {'teacher':teacher})

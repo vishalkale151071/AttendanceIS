@@ -2,6 +2,7 @@
   <dictionary name="vishal">
     <words>
       <w>endfor</w>
+      <w>substr</w>
     </words>
   </dictionary>
 </component>

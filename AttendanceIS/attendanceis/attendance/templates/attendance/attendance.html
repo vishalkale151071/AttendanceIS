@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance</title>
+</head>
+<body>
+    <h2>Attendance form</h2>
+    <form method="post" action="{% url 'attendance' %}">
+        {% csrf_token %}
+        <label for="subject">Subject :</label>
+            <input type="radio" id="subject" name="choice" value="subject"><br>
+        <label for="lab">Lab :</label>
+        <input type="radio" id="lab" name="choice" value="lab"><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

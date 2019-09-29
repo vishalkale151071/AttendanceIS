@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Filling</title>
+</head>
+<body>
+    <form method="Post" action="{% url 'attendance_lab_fill' %}">
+        {% csrf_token %}
+        <label for="lab">Lab :</label>
+        <input type="text" name="lab" id="lab" value="{{ lab }}">
+        <label for="batch">Batch :</label>
+        <input type="text" name="batch" id="batch" value="{{ batch }}"><br>
+        <label for="date">Date :</label>
+        <input type="date" name="date" id="date" value="{{ date }}"><br>
+        <label for="from">From :</label>
+        <input type="time" name="from" id="from" min="07:00" max="18:00" value="{{ from_time }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="to">To :</label>
+        <input type="time" name="to" id="to" min="07:00" max="18:00" value="{{ to_time }}"><br>
+        <table>
+            {% for students in student_list %}
+                <tr>
+                    {% for student in students %}
+                        <td>
+                            <label for="{{ student.roll_no }}">{{ student.roll_no }} :</label>
+                            <input type="checkbox" name="{{ student.roll_no }}" id="{{ student.roll_no }}" value="P" checked>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

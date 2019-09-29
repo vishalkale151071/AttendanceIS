@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Lab</title>
+</head>
+<body>
+    <h2>Lab Attendance</h2>
+    <form method="Post" action="{% url 'attendance_lab' %}">
+        {% csrf_token %}
+        <label for="lab">Lab :</label>
+        <select name="lab" id="lab">
+            {% for lab in labs %}
+                <option value="{{ lab.lab_name_id }}">{{ lab.lab_name_id }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="date">Date :</label>
+        <input type="date" name="date" id="date"><br>
+        <label for="from">From :</label>
+        <input type="time" name="from" id="from" min="07:00" max="18:00">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="to">To :</label>
+        <input type="time" name="to" id="to" min="07:00" max="18:00"><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
