@@ -13,6 +13,50 @@
         <label for="lab">Lab :</label>
         <input type="radio" id="lab" name="choice" value="lab"><br>
         <button type="submit">Submit</button>
+        <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
+        {% if error %}
+            {{ error }}
+        {% endif %}
     </form>
+    <div>
+        <h2>Subject Attendance</h2>
+        <table border=1>
+            <th>No.</th>
+            <th>Subject</th>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Slots</th>
+            {% for attendance in subject %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{attendance.subject}}</td>
+                    <td>{{attendance.date|date:'Y-m-d'}}</td>
+                    <td>{{attendance.from_time|date:'P'}}</td>
+                    <td>{{attendance.to_time|date:'P'}}</td>
+                    <td>{{attendance.slots}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div>
+        <h2>Lab Attendeance</h2>
+         <table border="1">
+            <th>No.</th>
+            <th>Lab</th>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            {% for attendance in lab %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{attendance.lab}}</td>
+                    <td>{{attendance.date|date:'Y-m-d'}}</td>
+                    <td>{{attendance.from_time|date:'P'}}</td>
+                    <td>{{attendance.to_time|date:'P'}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

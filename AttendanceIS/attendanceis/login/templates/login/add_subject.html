@@ -24,6 +24,7 @@
         {{ form.as_p }}
         <input type="hidden" name="form" value="subject">
         <button type="submit">Add</button>
+        <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
     </form>
 {% endif %}
 

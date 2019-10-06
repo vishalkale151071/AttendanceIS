@@ -10,5 +10,6 @@
     {% for subject in teacher.subjects %}
         {{ subject.subject_name_id }}
     {% endfor %}
+    <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
 </body>
 </html>

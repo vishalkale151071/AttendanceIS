@@ -10,6 +10,7 @@
     {% csrf_token %}
         {{ form.as_p }}
     <button type="submit">Sign up</button>
+    <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
   </form>
 </body>
 </html>

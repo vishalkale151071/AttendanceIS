@@ -20,7 +20,7 @@ def teacher_signup(request):
             else:
                 print("password does not matches.")
                 return render(request, 'login/signup.html', {'form': UserForm, 'extra_form': TeacherRegistrationForm, 'cperror':"password does not matches."})
-            return render(request, 'registration/home.html', {})
+            return render(request, 'home.html', {})
         else:
             print("INVALID form data")
             return render(request, 'login/signup.html', {'form': UserForm, 'extra_form': TeacherRegistrationForm})
@@ -36,6 +36,7 @@ def student_signup(request):
         return render(request, 'home.html', {})
     else:
         return render(request, 'login/student_signup.html', {'form': StudentRegistrationForm})
+
 
 @login_required
 def add_subject_lab(request):
