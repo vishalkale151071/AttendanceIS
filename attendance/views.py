@@ -1,6 +1,6 @@
 import string
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from login.models import Subject, Lab, Student
 from .models import AttendanceSubject, AttendanceLab
 from pymongo import MongoClient
@@ -102,7 +102,6 @@ def attendance_lab(request):
         date = request.POST.get('date')
         from_time = request.POST.get('from')
         to_time = request.POST.get('to')
-
         client = MongoClient()
         db = client['attendance']
         collection = db['login_teacher']
@@ -155,7 +154,6 @@ def fill_attendance(request):
     slots = data.pop('slots')[0]
     id = parse_datetime(date + "T" + from_time + ":00Z")
     key = (str(id) + from_time + division + year).strip(string.punctuation)
-    print(key)
     date = parse_datetime(date + "T00:00:00Z")
     from_time = parse_datetime("1900-01-01T" + from_time + ":00Z")
     try:
@@ -203,7 +201,7 @@ def fill_attendance(request):
     except Exception as e:
         return return_to_attrndance(request, "Duplicate attendance")
     client.close()
-    return render(request, 'attendance/attendance.html', {})
+    return return_to_attrndance(request)
 
 
 # Fill attendance for lab
@@ -218,8 +216,6 @@ def fill_attendance_lab(request):
     to_time = data.pop('to')[0]
     id = parse_datetime(date + "T" + from_time + ":00Z")
     key = (str(id) + from_time + batch + year).strip(string.punctuation)
-    print(key)
-
     date = parse_datetime(date + "T00:00:00Z")
     from_time = parse_datetime("1900-01-01T" + from_time + ":00Z")
     to_time = parse_datetime("1900-01-01T" + to_time + ":00Z")

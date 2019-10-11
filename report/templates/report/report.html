@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block mainbody %}
+    <h2>Subjetc report</h2>
+    <form method="POST" action="{% url 'subject_report' %}">
+        {% csrf_token %}
+        <label for="subject">Subject :</label>
+        <select name="subject" id="subject">
+            {% for subject in subjects %}
+                <option>{{ subject.subject_name_id }}</option>
+                <input type="hidden" name="{{ subject.subject_name_id }}" value="{{ subject.division }}">
+            {% endfor %}
+        </select>
+            <br>
+        <label for="from_date">From :</label>
+        <input type="date" name="from_date" id="from_date">
+        <label for="to_date">to :</label>
+        <input type="date" name="to_date" id="to_date"><br>
+        <button type="submit">Genrate Report</button>
+    </form>
+
+    <h2>Lab report</h2>
+    <form method="POST" action="{% url 'lab_report' %}">
+        {% csrf_token %}
+        <label for="lab">Lab :</label>
+        <select name="subject" id="lab">
+            {% for lab in labs %}
+                <option>{{ lab.lab_name_id }}</option>
+                <input type="hidden" name="{{ lab.lab_name_id }}" value="{{ lab.batch }}">
+            {% endfor %}
+        </select>
+            <br>
+        <label for="from_date">From :</label>
+        <input type="date" name="from_date" id="from_date">
+        <label for="to_date">to :</label>
+        <input type="date" name="from_date" id="to_date"><br>
+        <button type="submit">Genrate Report</button>
+    </form>
+{% endblock %}

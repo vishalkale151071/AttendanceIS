@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Attendance</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block mainbody %}
     <h2>Attendance form</h2>
     <form method="post" action="{% url 'attendance' %}">
         {% csrf_token %}
@@ -58,5 +53,4 @@
             {% endfor %}
         </table>
     </div>
-</body>
-</html>
+{% endblock %}

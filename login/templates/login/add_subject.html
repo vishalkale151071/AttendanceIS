@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Subject/Lab</title>
-</head>
-<body>
-
+{% extends 'base.html' %}
+{% block mainbody %}
 <form method="post" action="{% url 'add_subject_lab' %}">
     {% csrf_token %}
     <label for="sub">Subject</label>
@@ -37,6 +31,4 @@
         <button type="submit">Add</button>
     </form>
 {% endif %}
-
-</body>
-</html>
+{% endblock %}

@@ -35,7 +35,10 @@ def student_profile_update(request, roll_no):
 
 @login_required
 def student_profile(request):
-    students = Student.objects.all()
+    client = MongoClient()
+    db = client['attendance']
+    collection = db['login_student']
+    students = collection.find()
     return render(request, 'profiles/student.html', {'students': students})
 
 

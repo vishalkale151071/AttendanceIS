@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome</h1>
-    {{ user }}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block mainbody %}
+    <img src="{% static 'images/home.jpeg' %}" width=80% height=60%>
+{% endblock %}

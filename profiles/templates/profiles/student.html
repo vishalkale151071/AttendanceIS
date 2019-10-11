@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Profile</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block mainbody %}
     <table>
         <th>Roll No.</th>
         <th>Name</th>
@@ -24,5 +19,4 @@
         {% endfor %}
     </table>
     <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
-</body>
-</html>
+{% endblock %}
