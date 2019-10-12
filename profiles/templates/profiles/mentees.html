@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block mainbody %}
+    <h2>Mentes students</h2>
+    <table>
+        <th>Roll No.</th>
+        <th>Name</th>
+        <th>Year</th>
+        <th>Division</th>
+        <th>Batch</th>
+        <th>Details</th>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.roll_no }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.year }}</td>
+                <td>{{ student.division }}</td>
+                <td>{{ student.batch }}</td>
+                <td><a href="{% url 'student_profile_update' student.roll_no %}"><button type="button">Details</button></a><br></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
+{% endblock %}

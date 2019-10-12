@@ -8,7 +8,10 @@ from pymongo import MongoClient
 
 @login_required
 def profile_update(request):
-    teacher = Teacher.objects.get(username=request.user)
+    try:
+        teacher = Teacher.objects.get(username=request.user)
+    except:
+        return render(request, 'registration/login.html')
     form = TeacherUpdateForm(request.POST or None, instance=teacher)
     if request.method == 'POST':
         if form.is_valid():
@@ -37,8 +40,13 @@ def student_profile_update(request, roll_no):
 def student_profile(request):
     client = MongoClient()
     db = client['attendance']
-    collection = db['login_student']
-    students = collection.find()
+    collection = db['login_teacher']
+    teacher = collection.find_one({'username':str(request.user)})
+    print(teacher)
+    if teacher != "N/A":
+        collection = db['login_student']
+        students = collection.find({'year':teacher['cc'], 'department': teacher['department']})
+    client.close()
     return render(request, 'profiles/student.html', {'students': students})
 
 
@@ -50,3 +58,16 @@ def profile_view(request):
     teacher = col.find({'username': str(request.user)})
     client.close()
     return render(request, 'profiles/profile.html', {'teacher':teacher})
+
+
+@login_required
+def mentees(request):
+    client = MongoClient()
+    db = client['attendance']
+    collection = db['login_teacher']
+    teacher = collection.find_one({'username': str(request.user)},{'name':1})
+    teacher = teacher['name']
+    collection = db['login_student']
+    students = collection.find({'teacher_guardian_id': teacher})
+    client.close()
+    return render(request, 'profiles/mentees.html', {'students': students})

@@ -72,7 +72,16 @@ class Labs(models.Model):
 
 
 class Teacher(models.Model):
-    year_choices = (('None', 'None'),('F.E', 'F.E'), ('S.E', 'S.E'), ('T.E', 'T.E'), ('B.E', 'B.E'))
+    year_choices = (('N/A', 'N/A'),('F.E', 'F.E'), ('S.E', 'S.E'), ('T.E', 'T.E'), ('B.E', 'B.E'))
+    dept_choices = (
+        ('comp', 'Computer Engineering'),
+        ('civil', 'Civil Engineering'),
+        ('mech', 'Mechanical Engineering'),
+        ('it', 'Information Technology Engineering'),
+        ('e&tc', 'E&TC Engineering'),
+        ('inst', 'Instrumental Engineering'),
+        ('prod', 'Production Engineering'),
+    )
 
     name = models.CharField(max_length=80, unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -81,6 +90,7 @@ class Teacher(models.Model):
     primary_phone_no = models.CharField(max_length=10)
     secondary_phone_no = models.CharField(max_length=10)
     cc = models.CharField(max_length=3, choices=year_choices, default='None')
+    department = models.CharField(max_length=50, choices=dept_choices)
     subjects = models.ArrayModelField(model_container=Subjects)
     labs = models.ArrayModelField(model_container=Labs)
 

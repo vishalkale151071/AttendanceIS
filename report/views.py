@@ -42,23 +42,50 @@ def subject_report(request):
         [attendance.append(x) for x in data]
         head = ['roll_no']
         for x in attendance:
-            head.append(str(x['date']))
+            head.append(x['date'].strftime("%m/%d/%Y"))
             x.pop('date')
             x.pop('_id')
 
-        sheet = {}
-        for day in attendance:
-            for x in day['attendance']:
-                print(x)
+        collection = db['login_subject']
+        sub = collection.find_one({'name':subject},{'dept':1, 'year':1})
 
-        print(sheet)
+        collection = db['login_student']
+        students = collection.aggregate([{'$match': {'division': division, 'year': sub['year'], 'department': sub['dept']}},
+                                         {'$project': {
+                                             'roll_no': 1,
+                                             'no': {'$substr': ["$roll_no", 6, -1]}}
+                                         }, {'$sort': {'no': 1}}
+                                         ])
+        students_list = []
+        [students_list.append(x['roll_no']) for x in students]
+        sheet = [students_list]
+        for e,day in enumerate(attendance):
+            row = []
+            for roll_no in students_list:
+                no = next(item for item in day['attendance'] if item["roll_no"] == roll_no)
+                row.append(no['status'])
+                if not no:
+                    row.append('AB')
+            sheet.append(row)
+        # [x.append(str(x.count('P'))) for x in sheet]
+        # [x.append(str(x.count('AB'))) for x in sheet]
+        for row in sheet:
+            p = row.count('P')
+            a = row.count('AB')
+            if p == 0:
+                row.append("Total Present")
+            else:
+                row.append(p)
+            if a == 0:
+                row.append("Total Absent")
+            else:
+                row.append(a)
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = "attachment; filename='report.csv'"
-
+        response['Content-Disposition'] = "attachment; filename=report.csv"
         writer = csv.writer(response)
         writer.writerow(head)
-        for row in data['attendance']:
-            writer.writerow([row['roll_no'], row['status']])
+        for t in zip(*sheet):
+            writer.writerow(t)
 
     return response
 

@@ -21,4 +21,5 @@ urlpatterns = [
     path('student/', views.student_profile, name='student_profile'),
     path('', views.profile_view, name='profile'),
     path('student/<str:roll_no>/', views.student_profile_update, name='student_profile_update'),
+    path('mentees', views.mentees, name='mentees')
 ]
