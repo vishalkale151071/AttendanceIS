@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Attendance Subject</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block mainbody %}
     <h2>Subject Attendance</h2>
     <form method="Post" action="{% url 'attendance_subject' %}">
         {% csrf_token %}
@@ -26,5 +21,4 @@
         <button type="submit">Submit</button>
         <a href="{{request.META.HTTP_REFERER|escape}}"><button type="button">Back</button></a>
     </form>
-</body>
-</html>
+{% endblock %}

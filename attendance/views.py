@@ -1,19 +1,28 @@
 import string
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from login.models import Subject, Lab, Student
-from .models import AttendanceSubject, AttendanceLab
+from django.shortcuts import render
 from pymongo import MongoClient
 from django.utils.dateparse import parse_datetime
-import hashlib
 
 def return_to_attrndance(request, error=None):
     client = MongoClient()
     db = client['attendance']
+    collection = db['login_teacher']
+    teacher = collection.find_one({'username': str(request.user)})
+    subjects = teacher['subjects']
+    labs = teacher['labs']
+
+    subject_attendance = []
+    lab_attendance = []
+
     collection = db['attendance_attendancesubject']
-    subject_attendance = collection.find()
+    for subject in subjects:
+        data = collection.find({'subject': subject['subject_name_id'], 'division':subject['division']}).sort([('date', -1)])
+        [subject_attendance.append(x) for x in data]
     collection = db['attendance_attendancelab']
-    lab_attendance = collection.find()
+    for lab in labs:
+        data = collection.find({'lab': lab['lab_name_id'], 'batch':lab['batch']}).sort([('date', -1)])
+        [lab_attendance.append(x) for x in data]
     client.close()
     return render(request, 'attendance/attendance.html', {'subject': subject_attendance, 'lab': lab_attendance, 'error': error})
 
@@ -35,6 +44,7 @@ def attendance_form(request):
             labs = teacher['labs']
             client.close()
             return render(request, 'attendance/attendance_lab.html', {'labs': labs})
+        client.close()
         return return_to_attrndance(request)
     else:
         return return_to_attrndance(request)
@@ -199,6 +209,7 @@ def fill_attendance(request):
     try:
         collection.insert_one(document)
     except Exception as e:
+        client.close()
         return return_to_attrndance(request, "Duplicate attendance")
     client.close()
     return return_to_attrndance(request)
@@ -261,6 +272,7 @@ def fill_attendance_lab(request):
     try:
         collection.insert_one(document)
     except Exception as e:
+        client.close()
         return return_to_attrndance(request, "Duplicate attendance")
     client.close()
     return return_to_attrndance(request)

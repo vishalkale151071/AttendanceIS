@@ -7,14 +7,16 @@
         <select name="subject" id="subject">
             {% for subject in subjects %}
                 <option>{{ subject.subject_name_id }}</option>
+            {% endfor %}
+            {% for subject in subjects %}
                 <input type="hidden" name="{{ subject.subject_name_id }}" value="{{ subject.division }}">
             {% endfor %}
         </select>
             <br>
         <label for="from_date">From :</label>
-        <input type="date" name="from_date" id="from_date">
+        <input type="date" name="from_date" id="from_date" required>
         <label for="to_date">to :</label>
-        <input type="date" name="to_date" id="to_date"><br>
+        <input type="date" name="to_date" id="to_date" required><br>
         <button type="submit">Genrate Report</button>
     </form>
 
@@ -22,17 +24,19 @@
     <form method="POST" action="{% url 'lab_report' %}">
         {% csrf_token %}
         <label for="lab">Lab :</label>
-        <select name="subject" id="lab">
+        <select name="lab" id="lab">
             {% for lab in labs %}
                 <option>{{ lab.lab_name_id }}</option>
+            {% endfor %}
+            {% for lab in labs %}
                 <input type="hidden" name="{{ lab.lab_name_id }}" value="{{ lab.batch }}">
             {% endfor %}
         </select>
             <br>
         <label for="from_date">From :</label>
-        <input type="date" name="from_date" id="from_date">
+        <input type="date" name="from_date" id="from_date" required>
         <label for="to_date">to :</label>
-        <input type="date" name="from_date" id="to_date"><br>
+        <input type="date" name="to_date" id="to_date" required><br>
         <button type="submit">Genrate Report</button>
     </form>
 {% endblock %}
