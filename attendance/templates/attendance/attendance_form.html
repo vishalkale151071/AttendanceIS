@@ -1,4 +1,4 @@
-{% extendes 'base.html' %}
+{% extends 'base.html' %}
 {% block mainbody %}
     <form method="Post" action="{% url 'attendance_subject_fill' %}">
         {% csrf_token %}
