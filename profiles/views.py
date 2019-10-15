@@ -42,10 +42,12 @@ def student_profile(request):
     db = client['attendance']
     collection = db['login_teacher']
     teacher = collection.find_one({'username':str(request.user)})
-    print(teacher)
     if teacher != "N/A":
         collection = db['login_student']
-        students = collection.find({'year':teacher['cc'], 'department': teacher['department']})
+        students = collection.find({'year': teacher['cc'], 'department': teacher['department']})
+        students = list(students)
+        if not students:
+            students = False
     client.close()
     return render(request, 'profiles/student.html', {'students': students})
 
@@ -57,7 +59,7 @@ def profile_view(request):
     col = db['login_teacher']
     teacher = col.find({'username': str(request.user)})
     client.close()
-    return render(request, 'profiles/profile.html', {'teacher':teacher})
+    return render(request, 'profiles/profile.html', {'teacher': teacher})
 
 
 @login_required
@@ -65,9 +67,12 @@ def mentees(request):
     client = MongoClient()
     db = client['attendance']
     collection = db['login_teacher']
-    teacher = collection.find_one({'username': str(request.user)},{'name':1})
+    teacher = collection.find_one({'username': str(request.user)}, {'name': 1})
     teacher = teacher['name']
     collection = db['login_student']
     students = collection.find({'teacher_guardian_id': teacher})
     client.close()
+    students = list(students)
+    if not students:
+        students = False
     return render(request, 'profiles/mentees.html', {'students': students})

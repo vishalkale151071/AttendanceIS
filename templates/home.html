@@ -2,10 +2,12 @@
 {% load static %}
 {% block mainbody %}
     {% for report in reports %}
-        <div>
-            <h2>{{report.name}}</h2>
-            <img src="{{ report.image }}"><br>
-            <h3><label>Average attendance : </label> {{ report.avg }}</h3>
+        <div class="divblock">
+            <h2><b> {{report.name}} </b></h2>
+            <center>
+                <img src="{{ report.image }}"><br>
+            </center>
+            <h4><label>Average attendance : </label> {{ report.avg }}</h4>
         </div>
     {% endfor %}
 {% endblock %}

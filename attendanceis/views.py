@@ -72,10 +72,14 @@ def home(request):
         reports.append(d)
     # graph plotting logi
     for report in reports:
-        print(report)
         labels = report['dates']
         present = report['present']
         absent = report['absent']
+        if len(report['dates']) < 5:
+            for i in range(len(report['dates']), 5):
+                labels.append('NA')
+                present.append(0)
+                absent.append(0)
 
         x = np.arange(len(labels))  # the label locations
         width = 0.35  # the width of the bars
@@ -108,7 +112,11 @@ def home(request):
         fig.tight_layout()
         path = 'static/images/plot/'+ str(request.user) +report['name'] +'.png'
         plt.savefig(path)
-        avg = sum(report['present'])//report['total']
+        avg = 0
+        try:
+            avg = sum(report['present'])//report['total']
+        except ZeroDivisionError as z:
+            avg = 0
         d = dict(image=path, name=report['name'], avg=avg)
         graphs.append(d)
         plt.close()

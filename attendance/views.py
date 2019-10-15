@@ -24,6 +24,12 @@ def return_to_attrndance(request, error=None):
         data = collection.find({'lab': lab['lab_name_id'], 'batch':lab['batch']}).sort([('date', -1)])
         [lab_attendance.append(x) for x in data]
     client.close()
+    subject_attendance = sorted(subject_attendance, key = lambda k:k['date'])
+    lab_attendance = sorted(lab_attendance, key = lambda k:k['date'])
+    if not list(subject_attendance):
+        subject_attendance = False
+    if not list(lab_attendance):
+        lab_attendance = False
     return render(request, 'attendance/attendance.html', {'subject': subject_attendance, 'lab': lab_attendance, 'error': error})
 
 

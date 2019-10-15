@@ -1,7 +1,11 @@
+html { overflow-y: auto; overflow-x:hidden; }
+
 body {
-    margin: 0;
+    margin-top: 0;
+    width:100%;
     font-size: 28px;
     font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
 }
 
 .header {
@@ -11,8 +15,11 @@ body {
 }
 
 #navbar {
+    position: fixed;
+    width: 100%;
     overflow: hidden;
     background-color: #333;
+    z-index: 1;
 }
 
 #navbar a {
@@ -30,17 +37,13 @@ body {
     color: black;
 }
 
-#navbar a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
 .content {
     padding-left: 228px;
-    padding-top: 40px;
+    padding-bottom: 50;
+    margin-top: 80px;
     width: 100%;
     height: 100%;
-    font-size: 18;
+    overflow: auto;
 }
 
 .sticky {
@@ -62,6 +65,8 @@ body {
     background: #fff;
     overflow-x: hidden;
     padding: 8px 0;
+    z-index: 1;
+    text-decoration: none;
 }
 
 .sidenav a {
@@ -73,7 +78,8 @@ body {
 }
 
 .sidenav a:hover {
-    color: #064579;
+    background-color: #333;
+    color: #fff;
 }
 
 .main {
@@ -107,7 +113,76 @@ div.card {
   text-align: left;
   transition: all 0.3s 0s ease-in;
   z-index: 1;
-
+}
   img {
-    max-width: 300px;
+    max-width: 300%;
+    position: relative;
+    z-index = 2;
  }
+
+ .divblock {
+    background: skyblue;
+    border: solid 1px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+ }
+
+.divblock table {
+    width: 100%;
+}
+
+ .divblock td, .divblock th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.divblock tr:nth-child(even){background-color: #f2f2f2;}
+
+.divblock tr:hover {background-color: #ddd;}
+
+.divblock th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.divblock h2, h4 {
+    color: #333;
+    padding-left: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.site-footer
+{
+  background-color:#333;
+  padding:45px 0 20px;
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+  width: 100%;
+  bottom: 0;
+}
+
+.site-footer a
+{
+  color:#737373;
+}
+
+.site-footer a:hover
+{
+  color:#3366cc;
+  text-decoration:none;
+}
+
+.copyright-text {
+    text-align: center;
+}
+
+.site-footer a {
+    color: white;
+}

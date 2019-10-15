@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
+from attendanceis.views import home
 from .forms import TeacherRegistrationForm, UserForm, StudentRegistrationForm, SubjectFrom, LabFrom
 
 
@@ -20,7 +20,7 @@ def teacher_signup(request):
             else:
                 print("password does not matches.")
                 return render(request, 'login/signup.html', {'form': UserForm, 'extra_form': TeacherRegistrationForm, 'cperror':"password does not matches."})
-            return render(request, 'home.html', {})
+            return home(request)
         else:
             print("INVALID form data")
             return render(request, 'login/signup.html', {'form': UserForm, 'extra_form': TeacherRegistrationForm})
