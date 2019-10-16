@@ -19,6 +19,7 @@
         <table border=1>
             <th>No.</th>
             <th>Subject</th>
+            <th>Division</th>
             <th>Date</th>
             <th>From</th>
             <th>To</th>
@@ -27,6 +28,7 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{attendance.subject}}</td>
+                    <td>{{ attendance.division }}</td>
                     <td>{{attendance.date|date:'Y-m-d'}}</td>
                     <td>{{attendance.from_time|date:'P'}}</td>
                     <td>{{attendance.to_time|date:'P'}}</td>
@@ -44,6 +46,7 @@
          <table border="1">
             <th>No.</th>
             <th>Lab</th>
+            <th>Batch</th>
             <th>Date</th>
             <th>From</th>
             <th>To</th>
@@ -51,6 +54,7 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{attendance.lab}}</td>
+                    <td>{{ attendance.batch }}</td>
                     <td>{{attendance.date|date:'Y-m-d'}}</td>
                     <td>{{attendance.from_time|date:'P'}}</td>
                     <td>{{attendance.to_time|date:'P'}}</td>

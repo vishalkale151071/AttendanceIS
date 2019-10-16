@@ -3,8 +3,8 @@
     <h2>Subjetc report</h2>
     <form method="POST" action="{% url 'subject_report' %}">
         {% csrf_token %}
-        <label for="subject">Subject :</label>
-        <select name="subject" id="subject">
+        <label>Subject :</label>
+        <select name="subject">
             {% for subject in subjects %}
                 <option>{{ subject.subject_name_id }}</option>
             {% endfor %}
@@ -19,7 +19,7 @@
         <input type="date" name="to_date" id="to_date" required><br>
         <button type="submit">Genrate Report</button>
     </form>
-
+    ____________________________________________________________________________________________
     <h2>Lab report</h2>
     <form method="POST" action="{% url 'lab_report' %}">
         {% csrf_token %}
@@ -33,10 +33,32 @@
             {% endfor %}
         </select>
             <br>
-        <label for="from_date">From :</label>
-        <input type="date" name="from_date" id="from_date" required>
-        <label for="to_date">to :</label>
-        <input type="date" name="to_date" id="to_date" required><br>
+        <label>From :</label>
+        <input type="date" name="from_date" required>
+        <label>to :</label>
+        <input type="date" name="to_date" required><br>
         <button type="submit">Genrate Report</button>
     </form>
+    ____________________________________________________________________________________________
+    {% if cc %}
+        <h2>Class report</h2>
+        <form method="POST" action="{% url 'class_report' %}">
+            {% csrf_token %}
+            <label>Year :</label>
+            <input type="text" value="{{ cc }}" disabled>
+            <input type="hidden" name="year" value="{{ cc }}">
+            <label>Sem :</label>
+            <input type="number" name="sem" required><br>
+            <label>Department :</label>
+            <input type="text" value="{{ dept }}" disabled>
+            <input type="text" name="department" value="{{ dept }}">
+            <br>
+            <label>From :</label>
+            <input type="date" name="from_date" required>
+            <label>to :</label>
+            <input type="date" name="to_date" required><br>
+            <button type="submit">Genrate Report</button>
+        </form>
+    ____________________________________________________________________________________________
+    {% endif %}
 {% endblock %}

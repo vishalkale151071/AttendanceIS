@@ -14,9 +14,15 @@ def report(request):
     teacher = collection.find_one({'username': str(request.user)})
     subjects = teacher['subjects']
     labs = teacher['labs']
+    cc = teacher['cc']
+    dept = teacher['department']
+    if cc == 'N/A':
+        cc == False
     context = {
         'subjects': subjects,
-        'labs': labs
+        'labs': labs,
+        'cc': cc,
+        'dept': dept
     }
     client.close()
     return render(request, 'report/report.html', context)
@@ -80,12 +86,25 @@ def subject_report(request):
                 row.append("Total Absent")
             else:
                 row.append(a)
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = "attachment; filename=report.csv"
-        writer = csv.writer(response)
-        writer.writerow(head)
-        for t in zip(*sheet):
-            writer.writerow(t)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = "attachment; filename=report.csv"
+    writer = csv.writer(response)
+    head.append('Total %')
+    head.append('Defaulter')
+    writer.writerow(head)
+    total_lectures = len(head) -3
+    for t in zip(*sheet):
+        if "Total Present" not in t and "Total Absent" not in t:
+            present = t.count('P')
+            percent = (present / total_lectures * 100)
+            percent = float("{0:.2f}".format(percent))
+            t = list(t)
+            t.append(percent)
+            if percent < 75.00:
+                t.append("Defaulter")
+            else:
+                t.append("Not Defaulter")
+        writer.writerow(t)
     return response
 
 
@@ -145,11 +164,128 @@ def lab_report(request):
                 row.append("Total Absent")
             else:
                 row.append(a)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = "attachment; filename=report.csv"
+    writer = csv.writer(response)
+    head.append('Total %')
+    head.append('Defaulter')
+    writer.writerow(head)
+    total_lectures = len(head) - 3
+    for t in zip(*sheet):
+        if "Total Present" not in t and "Total Absent" not in t:
+            present = t.count('P')
+            percent = (present / total_lectures * 100)
+            percent = float("{0:.2f}".format(percent))
+            t = list(t)
+            t.append(percent)
+            if percent < 75.00:
+                t.append("Defaulter")
+            else:
+                t.append("Not Defaulter")
+        writer.writerow(t)
+    client.close()
+    return response
+
+
+@login_required
+def class_report(request):
+    if request.method == 'POST':
+        department = request.POST.get('department')
+        year = request.POST.get('year')
+        sem = request.POST.get('sem')
+        from_date = request.POST.get('from_date')
+        from_date = parse_datetime(from_date + "T00:00:00Z")
+        to_date = request.POST.get('to_date')
+        to_date = parse_datetime(to_date + "T00:00:00Z")
+        head = ['Roll No']
+
+        client = MongoClient()
+        db = client['attendance']
+
+        collection = db['login_student']
+        students = collection.aggregate(
+            [{'$match': {'year': year, 'department': department}},
+             {'$project': {
+                 'roll_no': 1,
+                 'no': {'$substr': ["$roll_no", 6, -1]}}
+             }, {'$sort': {'no': 1}}
+             ])
+        students_list = []
+        [students_list.append(x['roll_no']) for x in students]
+
+        collection = db['login_subject']
+        subjects = collection.find({'year':year, 'dept': department, 'sem': sem}, {'name': 1})
+        subject_list = []
+        for x in subjects:
+            subject_list.append(x['name'])
+
+
+        collection = db['login_lab']
+        labs = collection.find({'year': year, 'dept': department, 'sem': sem}, {'name': 1})
+        lab_list = []
+        for x in labs:
+            lab_list.append(x['name'])
+        attendance_subject = []
+        attendance_lab = []
+        collection = db['attendance_attendancesubject']
+        subject_attendance = collection.find({'year':year, '$and': [{'date': {'$gte': from_date, '$lte': to_date}}]}, {'attendance': 1, 'subject': 1}).sort([('subject', 1)])
+        [attendance_subject.append(x) for x in subject_attendance]
+
+        collection = db['attendance_attendancelab']
+        lab_attendance = collection.find({'year':year, '$and': [{'date': {'$gte': from_date, '$lte': to_date}}]}, {'attendance': 1, 'lab': 1}).sort([('lab', 1)])
+        [attendance_lab.append(x) for x in lab_attendance]
+        datasheet = []
+        total_lectures = []
+        for subject in subject_list:
+            head.append(subject)
+            sheet = list(filter(lambda k:k['subject'] == subject, attendance_subject))
+            att = []
+            for s in sheet:
+                attendance_subject.remove(s)
+                s = s['attendance']
+                att.append(s)
+            data = []
+            total_lectures.append(len(att))
+            for student in students_list:
+                d = dict(roll_no=student, status='P')
+                p = 0
+                for attendance in att:
+                    if d in attendance:
+                        p += 1
+                data.append(p)
+            datasheet.append(data)
+
+        for lab in lab_list:
+            head.append(lab)
+            sheet = list(filter(lambda k:k['lab'] == lab, attendance_lab))
+            att = []
+            for s in sheet:
+                attendance_lab.remove(s)
+                s = s['attendance']
+                att.append(s)
+            data = []
+            total_lectures.append(len(att))
+            for student in students_list:
+                d = dict(roll_no=student, status='P')
+                p = 0
+                for attendance in att:
+                    if d in attendance:
+                        p += 1
+                data.append(p)
+            datasheet.append(data)
+
+        datasheet.insert(0, students_list)
+
+        head.append("Total %")
+        head.append("Defaulter")
+
+        # Write csv
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = "attachment; filename=report.csv"
         writer = csv.writer(response)
         writer.writerow(head)
-        for t in zip(*sheet):
+        print(total_lectures)
+        for t in zip(*datasheet):
             writer.writerow(t)
         client.close()
-    return response
+        return response

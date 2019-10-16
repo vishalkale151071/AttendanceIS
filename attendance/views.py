@@ -4,6 +4,7 @@ from django.shortcuts import render
 from pymongo import MongoClient
 from django.utils.dateparse import parse_datetime
 
+
 def return_to_attrndance(request, error=None):
     client = MongoClient()
     db = client['attendance']
@@ -17,7 +18,7 @@ def return_to_attrndance(request, error=None):
 
     collection = db['attendance_attendancesubject']
     for subject in subjects:
-        data = collection.find({'subject': subject['subject_name_id'], 'division':subject['division']}).sort([('date', -1)])
+        data = collection.find({'subject': subject['subject_name_id'], 'division': subject['division']}).sort([('date', -1)])
         [subject_attendance.append(x) for x in data]
     collection = db['attendance_attendancelab']
     for lab in labs:
@@ -277,7 +278,7 @@ def fill_attendance_lab(request):
     collection = db['attendance_attendancelab']
     try:
         collection.insert_one(document)
-    except Exception as e:
+    except Exception:
         client.close()
         return return_to_attrndance(request, "Duplicate attendance")
     client.close()
